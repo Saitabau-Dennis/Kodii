@@ -1,0 +1,13 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+
+html,
+body {
+	min-height: 100%;
+}
+
+body {
+	font-family: 'APK Protocol', 'Onest', sans-serif;
+	background: #000;
+	color: #f1f5f9;
+}
