@@ -11,3 +11,25 @@ body {
 	background: #000;
 	color: #f1f5f9;
 }
+
+@layer utilities {
+	input:where([type='text']):focus,
+	input:where(:not([type])):focus,
+	input:where([type='email']):focus,
+	input:where([type='url']):focus,
+	input:where([type='password']):focus,
+	input:where([type='number']):focus,
+	input:where([type='date']):focus,
+	input:where([type='datetime-local']):focus,
+	input:where([type='month']):focus,
+	input:where([type='search']):focus,
+	input:where([type='tel']):focus,
+	input:where([type='time']):focus,
+	input:where([type='week']):focus,
+	select:where([multiple]):focus,
+	textarea:focus,
+	select:focus {
+		--tw-ring-color: rgb(16 185 129 / var(--tw-ring-opacity, 1)) !important;
+		border-color: rgb(16 185 129 / var(--tw-border-opacity, 1)) !important;
+	}
+}

@@ -10,6 +10,6 @@
 
 	<a
 		class="inline-block rounded-xl border-2 border-emerald-500 px-5 py-2 text-base font-normal text-zinc-100 transition hover:bg-emerald-500/10"
-		href={resolve('/auth/better-auth/register')}>Get Started</a
+		href={resolve('/register')}>Get Started</a
 	>
 </nav>
