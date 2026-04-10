@@ -4,8 +4,8 @@
 </script>
 
 <main class="relative min-h-screen overflow-hidden">
-	<div class="pointer-events-none absolute inset-y-0 left-[12%] w-px bg-zinc-800/70"></div>
-	<div class="pointer-events-none absolute inset-y-0 right-[12%] w-px bg-zinc-800/70"></div>
+	<div class="pointer-events-none absolute inset-y-0 left-[12%] w-px bg-zinc-800"></div>
+	<div class="pointer-events-none absolute inset-y-0 right-[12%] w-px bg-zinc-800"></div>
 
 	<section class="relative mx-[12%] min-h-screen">
 		<div class="absolute top-10 right-8 left-8 md:right-12 md:left-12">
@@ -37,7 +37,7 @@
 				<div class="mt-10 flex flex-wrap gap-4">
 					<a
 						class="inline-block rounded-xl border-2 border-emerald-500 px-6 py-3 text-lg font-normal text-zinc-100 transition hover:bg-emerald-500/10"
-						href={resolve('/auth/better-auth/register')}>Get Started</a
+						href={resolve('/register')}>Get Started</a
 					>
 				</div>
 			</div>
