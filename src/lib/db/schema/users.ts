@@ -23,6 +23,7 @@ export const users = pgTable(
     invitedBy: uuid('invited_by'),
     inviteStatus: inviteStatusEnum('invite_status'),
     phoneVerified: boolean('phone_verified').notNull().default(false),
+    lastLoginAt: timestamp('last_login_at'),
     createdAt: timestamp('created_at').notNull().defaultNow(),
   },
   (table) => [

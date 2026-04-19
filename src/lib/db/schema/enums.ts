@@ -2,13 +2,13 @@ import { pgEnum } from 'drizzle-orm/pg-core'
 
 export const roleEnum = pgEnum('role', ['landlord', 'caretaker'])
 
-export const inviteStatusEnum = pgEnum('invite_status', ['pending', 'accepted'])
+export const inviteStatusEnum = pgEnum('invite_status', ['pending', 'accepted', 'deactivated'])
 
 export const unitStatusEnum = pgEnum('unit_status', ['vacant', 'occupied', 'inactive'])
 
 export const tenantStatusEnum = pgEnum('tenant_status', ['active', 'inactive', 'moved_out'])
 
-export const invoiceStatusEnum = pgEnum('invoice_status', ['unpaid', 'partial', 'paid', 'overdue'])
+export const invoiceStatusEnum = pgEnum('invoice_status', ['unpaid', 'partial', 'paid', 'overdue', 'written_off'])
 
 export const paymentStatusEnum = pgEnum('payment_status', [
   'unpaid',

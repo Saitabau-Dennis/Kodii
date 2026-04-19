@@ -59,26 +59,26 @@
 </script>
 
 <main
-	class="relative grid min-h-screen content-start justify-items-center overflow-hidden bg-black px-6 pt-8 pb-10 md:pt-12"
+	class="relative grid min-h-screen content-start justify-items-center overflow-hidden bg-black px-4 pt-6 pb-8 sm:px-6 sm:pt-8 sm:pb-10 md:pt-12"
 >
-	<div class="pointer-events-none absolute inset-y-0 left-[12%] w-px bg-zinc-700/55"></div>
-	<div class="pointer-events-none absolute inset-y-0 right-[12%] w-px bg-zinc-700/55"></div>
+	<div class="pointer-events-none absolute inset-y-0 left-[12%] hidden w-px bg-zinc-700/55 md:block"></div>
+	<div class="pointer-events-none absolute inset-y-0 right-[12%] hidden w-px bg-zinc-700/55 md:block"></div>
 
 	<div class="pointer-events-none absolute -top-20 left-[10%] h-72 w-72 rounded-full bg-white/10 blur-3xl"></div>
 	<div
 		class="pointer-events-none absolute right-[7%] -bottom-20 h-72 w-72 rounded-full bg-emerald-400/20 blur-3xl"
 	></div>
 
-	<section class="relative z-10 grid w-full max-w-5xl gap-4 lg:grid-cols-[1.05fr_1fr]">
-		<aside class="rounded-[18px] border border-zinc-800 bg-zinc-950/90 p-7 backdrop-blur-md lg:p-8">
-			<h1 class="m-0 text-3xl leading-tight font-normal text-zinc-50 md:text-4xl">Verify your number.</h1>
-			<p class="mt-4 max-w-[45ch] text-zinc-400">Enter the 6-digit PIN sent to your phone</p>
+	<section class="relative z-10 grid w-full max-w-5xl gap-3 sm:gap-4 lg:grid-cols-[1.05fr_1fr]">
+		<aside class="rounded-[18px] border border-zinc-800 bg-zinc-950/90 p-5 backdrop-blur-md sm:p-7 lg:p-8">
+			<h1 class="m-0 text-2xl leading-tight font-normal text-zinc-50 sm:text-3xl md:text-4xl">Verify your number.</h1>
+			<p class="mt-3 max-w-[45ch] text-sm text-zinc-400 sm:mt-4 sm:text-base">Enter the 6-digit PIN sent to your phone</p>
 			<div class="mt-7 rounded-[14px] border border-zinc-800 text-center p-4">
-				<p class="mt-1 text-lg text-zinc-200">{data.maskedPhone}</p>
+				<p class="mt-1 text-base text-zinc-200 sm:text-lg">{data.maskedPhone}</p>
 			</div>
 		</aside>
 
-		<section class="rounded-[18px] border border-zinc-800 bg-zinc-950/90 p-6 backdrop-blur-md lg:p-8">
+		<section class="rounded-[18px] border border-zinc-800 bg-zinc-950/90 p-5 backdrop-blur-md sm:p-6 lg:p-8">
 			<div>
 				<p class="mt-1 text-sm text-zinc-400">Paste or type the OTP below.</p>
 			</div>
@@ -102,7 +102,7 @@
 						required
 						bind:value={code}
 						oninput={handleInput}
-						class="w-full rounded-[10px] border border-zinc-700 bg-zinc-950 px-3.5 py-2.5 text-center font-mono text-lg tracking-[0.35em] text-zinc-50 transition outline-none"
+						class="w-full rounded-[10px] border border-zinc-700 bg-zinc-950 px-3.5 py-2.5 text-center font-mono text-base tracking-[0.2em] text-zinc-50 transition outline-none sm:text-lg sm:tracking-[0.35em]"
 					/>
 				</label>
 
@@ -137,9 +137,9 @@
 					}
 				}}
 			>
-				<div class="flex items-center justify-between text-sm text-zinc-400">
+				<div class="flex flex-col gap-2 text-sm text-zinc-400 sm:flex-row sm:items-center sm:justify-between">
 					{#if !canResend}
-						<span>Resend in {countdown}s</span>
+						<span>You can request a new code in {countdown}s</span>
 					{:else}
 						<span>Didn't get the code?</span>
 					{/if}
@@ -148,7 +148,7 @@
 						disabled={!canResend || isResending}
 						class="cursor-pointer text-emerald-400 hover:text-emerald-300 disabled:cursor-not-allowed disabled:text-zinc-500"
 					>
-						{isResending ? 'Sending...' : canResend ? 'Resend OTP' : `Resend in ${countdown}s`}
+						{isResending ? 'Sending...' : 'Resend OTP'}
 					</button>
 				</div>
 			</form>

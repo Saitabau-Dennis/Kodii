@@ -1,0 +1,1 @@
+ALTER TABLE "tenants" ADD COLUMN "credit_balance" numeric(12, 2) DEFAULT '0' NOT NULL;

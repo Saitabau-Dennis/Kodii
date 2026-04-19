@@ -1,6 +1,7 @@
 import { and, desc, eq } from 'drizzle-orm'
 import { db } from '$lib/server/db'
 import { otpCodes } from '$lib/db/schema'
+import { withRetry } from '$lib/db/retry'
 
 export type OTPRecord = typeof otpCodes.$inferSelect
 
@@ -14,15 +15,17 @@ export interface VerifyOTPResult {
  * Creates and stores an OTP code for a user.
  */
 export async function createOTP(userId: string, code: string, expiresAt: Date): Promise<OTPRecord> {
-  const [created] = await db
-    .insert(otpCodes)
-    .values({
-      userId,
-      code,
-      expiresAt,
-      used: false,
-    })
-    .returning()
+  const [created] = await withRetry(() =>
+    db
+      .insert(otpCodes)
+      .values({
+        userId,
+        code,
+        expiresAt,
+        used: false,
+      })
+      .returning(),
+  )
 
   return created
 }
@@ -31,22 +34,26 @@ export async function createOTP(userId: string, code: string, expiresAt: Date): 
  * Marks all OTP codes for a user as used.
  */
 export async function invalidateOTPs(userId: string): Promise<void> {
-  await db
-    .update(otpCodes)
-    .set({ used: true })
-    .where(and(eq(otpCodes.userId, userId), eq(otpCodes.used, false)))
+  await withRetry(() =>
+    db
+      .update(otpCodes)
+      .set({ used: true })
+      .where(and(eq(otpCodes.userId, userId), eq(otpCodes.used, false))),
+  )
 }
 
 /**
  * Returns the latest OTP entry for a user.
  */
 export async function getLatestOTP(userId: string): Promise<OTPRecord | undefined> {
-  const [otp] = await db
-    .select()
-    .from(otpCodes)
-    .where(and(eq(otpCodes.userId, userId), eq(otpCodes.used, false)))
-    .orderBy(desc(otpCodes.createdAt))
-    .limit(1)
+  const [otp] = await withRetry(() =>
+    db
+      .select()
+      .from(otpCodes)
+      .where(and(eq(otpCodes.userId, userId), eq(otpCodes.used, false)))
+      .orderBy(desc(otpCodes.createdAt))
+      .limit(1),
+  )
 
   return otp
 }

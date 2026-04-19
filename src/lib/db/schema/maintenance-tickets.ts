@@ -20,7 +20,7 @@ export const maintenanceTickets = pgTable('maintenance_tickets', {
   resolvedAt: timestamp('resolved_at'),
 })
 
-export const maintenanceTicketsRelations = relations(maintenanceTickets, ({ one }) => ({
+export const maintenanceTicketsRelations = relations(maintenanceTickets, ({ one, many }) => ({
   property: one(properties, {
     fields: [maintenanceTickets.propertyId],
     references: [properties.id],
@@ -37,4 +37,7 @@ export const maintenanceTicketsRelations = relations(maintenanceTickets, ({ one 
     fields: [maintenanceTickets.assignedTo],
     references: [users.id],
   }),
+  comments: many(ticketComments),
 }))
+
+import { ticketComments } from './ticket-comments'

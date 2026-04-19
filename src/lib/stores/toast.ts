@@ -15,9 +15,9 @@ let nextId = 1;
 
 function addToast(type: ToastType, message: string, duration = 4000) {
 	const id = nextId++;
-	const toast: Toast = { id, type, message, duration };
+	const toastItem: Toast = { id, type, message, duration };
 
-	toastsStore.update((items) => [...items, toast]);
+	toastsStore.update((items) => [...items, toastItem]);
 
 	setTimeout(() => {
 		toastsStore.update((items) => items.filter((item) => item.id !== id));
@@ -29,6 +29,11 @@ function addToast(type: ToastType, message: string, duration = 4000) {
 function removeToast(id: number) {
 	toastsStore.update((items) => items.filter((item) => item.id !== id));
 }
+
+export const toast = {
+	success: (message: string, duration?: number) => addToast('success', message, duration),
+	error: (message: string, duration?: number) => addToast('error', message, duration)
+};
 
 export const toastStore = {
 	subscribe: toastsStore.subscribe,

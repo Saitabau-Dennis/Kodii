@@ -1,4 +1,4 @@
-import { pgTable, uuid, varchar, text, timestamp } from 'drizzle-orm/pg-core'
+import { pgTable, uuid, varchar, text, timestamp, integer } from 'drizzle-orm/pg-core'
 import { relations } from 'drizzle-orm'
 import { users } from './users'
 import { units } from './units'
@@ -10,6 +10,7 @@ export const properties = pgTable('properties', {
   ownerId: uuid('owner_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
   name: varchar('name', { length: 255 }).notNull(),
   location: text('location'),
+  totalUnits: integer('total_units').notNull().default(0),
   caretakerName: varchar('caretaker_name', { length: 255 }),
   caretakerPhone: varchar('caretaker_phone', { length: 20 }),
   notes: text('notes'),

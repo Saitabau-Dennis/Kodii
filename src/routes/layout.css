@@ -12,7 +12,23 @@ body {
 	color: #f1f5f9;
 }
 
+@layer base {
+	button:not(:disabled),
+	[role='button']:not([aria-disabled='true']) {
+		cursor: pointer;
+	}
+}
+
 @layer utilities {
+	.no-scrollbar {
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+	}
+
+	.no-scrollbar::-webkit-scrollbar {
+		display: none;
+	}
+
 	input:where([type='text']):focus,
 	input:where(:not([type])):focus,
 	input:where([type='email']):focus,

@@ -3,6 +3,9 @@ import { dev } from '$app/environment'
 import { env } from '$env/dynamic/private'
 import { redirect, type RequestEvent } from '@sveltejs/kit'
 import { SignJWT, jwtVerify, type JWTPayload } from 'jose'
+import { eq } from 'drizzle-orm'
+import { db } from '$lib/server/db'
+import { users } from '$lib/db/schema'
 
 export type Role = 'landlord' | 'caretaker'
 
@@ -12,12 +15,13 @@ export interface SessionPayload {
   name: string
   email: string
   phone: string
+  sessionIssuedAt?: number | null
 }
 
 export interface TempPayload {
   userId: string
   maskedPhone: string
-  flow?: 'register' | 'login' | 'login_unverified'
+  flow?: 'register' | 'login' | 'login_unverified' | 'reactivate'
 }
 
 export interface PostRegisterPayload {
@@ -65,7 +69,8 @@ function isTempPayload(payload: JWTPayload): payload is JWTPayload & TempPayload
     payload.flow === undefined ||
     payload.flow === 'register' ||
     payload.flow === 'login' ||
-    payload.flow === 'login_unverified'
+    payload.flow === 'login_unverified' ||
+    payload.flow === 'reactivate'
 
   return hasCore && hasValidFlow
 }
@@ -155,7 +160,22 @@ export async function getSession(event: RequestEvent): Promise<SessionPayload | 
       name: payload.name,
       email: payload.email,
       phone: payload.phone,
+      sessionIssuedAt: typeof payload.iat === 'number' ? payload.iat : null,
     }
+  } catch {
+    return null
+  }
+}
+
+/** Reads the issued-at timestamp from the signed session cookie. */
+export async function getSessionIssuedAt(event: RequestEvent): Promise<Date | null> {
+  const token = event.cookies.get(SESSION_COOKIE)
+  if (!token) return null
+
+  try {
+    const { payload } = await jwtVerify(token, getSessionSecret())
+    if (typeof payload.iat !== 'number') return null
+    return new Date(payload.iat * 1000)
   } catch {
     return null
   }
@@ -166,6 +186,34 @@ export async function requireAuth(event: RequestEvent): Promise<SessionPayload> 
   const session = await getSession(event)
   if (!session) {
     throw redirect(302, '/login')
+  }
+
+  const [user] = await db
+    .select({
+      id: users.id,
+      inviteStatus: users.inviteStatus,
+      lastLoginAt: users.lastLoginAt,
+    })
+    .from(users)
+    .where(eq(users.id, session.userId))
+    .limit(1)
+
+  if (!user) {
+    clearSession(event)
+    throw redirect(302, '/login')
+  }
+
+  if (user.inviteStatus === 'deactivated') {
+    clearSession(event)
+    throw redirect(302, '/login')
+  }
+
+  if (typeof session.sessionIssuedAt === 'number' && user.lastLoginAt) {
+    const invalidAfter = Math.floor(user.lastLoginAt.getTime() / 1000)
+    if (session.sessionIssuedAt < invalidAfter) {
+      clearSession(event)
+      throw redirect(302, '/login')
+    }
   }
 
   return session
