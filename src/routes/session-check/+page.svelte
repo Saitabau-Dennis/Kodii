@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation'
+	import { resolve } from '$app/paths'
 	import { onMount } from 'svelte'
 	import type { PageData } from './$types'
 
@@ -12,7 +13,7 @@
 			if (!data.hasSession) {
 				checking = false
 				redirecting = true
-				void goto('/login')
+				void goto(resolve('/login'))
 				return
 			}
 
@@ -25,13 +26,13 @@
 	function continueAction() {
 		if (checking || redirecting || !data.hasSession) return
 		redirecting = true
-		void goto('/dashboard')
+		void goto(resolve('/dashboard'))
 	}
 </script>
 
 <main class="relative grid min-h-screen content-start justify-items-center overflow-hidden bg-black px-6 pt-8 md:pt-12">
-	<div class="pointer-events-none absolute inset-y-0 left-[12%] w-px bg-zinc-700/55"></div>
-	<div class="pointer-events-none absolute inset-y-0 right-[12%] w-px bg-zinc-700/55"></div>
+	<div class="pointer-events-none absolute inset-y-0 left-[12%] hidden w-px bg-zinc-700/55 md:block"></div>
+	<div class="pointer-events-none absolute inset-y-0 right-[12%] hidden w-px bg-zinc-700/55 md:block"></div>
 
 	<div class="pointer-events-none absolute -top-24 left-[10%] h-72 w-72 rounded-full bg-white/10 blur-3xl"></div>
 	<div

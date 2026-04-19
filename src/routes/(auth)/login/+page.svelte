@@ -53,10 +53,10 @@
 </script>
 
 <main
-	class="relative grid min-h-screen content-start justify-items-center overflow-hidden bg-black px-6 pt-8 pb-10 md:pt-12"
+	class="relative grid min-h-screen content-start justify-items-center overflow-hidden bg-black px-4 pt-6 pb-8 sm:px-6 sm:pt-8 sm:pb-10 md:pt-12"
 >
-	<div class="pointer-events-none absolute inset-y-0 left-[12%] w-px bg-zinc-700/55"></div>
-	<div class="pointer-events-none absolute inset-y-0 right-[12%] w-px bg-zinc-700/55"></div>
+	<div class="pointer-events-none absolute inset-y-0 left-[12%] hidden w-px bg-zinc-700/55 md:block"></div>
+	<div class="pointer-events-none absolute inset-y-0 right-[12%] hidden w-px bg-zinc-700/55 md:block"></div>
 
 	<div
 		class="pointer-events-none absolute -top-28 left-[8%] h-72 w-72 rounded-full bg-white/10 blur-3xl"
@@ -65,18 +65,18 @@
 		class="pointer-events-none absolute right-[6%] -bottom-24 h-72 w-72 rounded-full bg-emerald-400/20 blur-3xl"
 	></div>
 
-	<section class="relative z-10 grid w-full max-w-5xl gap-4 lg:grid-cols-[1.05fr_1fr]">
-		<aside class="rounded-[18px] border border-zinc-800 bg-zinc-950/90 p-7 backdrop-blur-md lg:p-8">
-			<h1 class="m-0 text-3xl leading-tight font-normal text-zinc-50 md:text-4xl">
+	<section class="relative z-10 grid w-full max-w-5xl gap-3 sm:gap-4 lg:grid-cols-[1.05fr_1fr]">
+		<aside class="rounded-[18px] border border-zinc-800 bg-zinc-950/90 p-5 backdrop-blur-md sm:p-7 lg:p-8">
+			<h1 class="m-0 text-2xl leading-tight font-normal text-zinc-50 sm:text-3xl md:text-4xl">
 				Welcome back to KODII.
 			</h1>
-			<p class="mt-4 max-w-[45ch] text-zinc-400">
+			<p class="mt-3 max-w-[45ch] text-sm text-zinc-400 sm:mt-4 sm:text-base">
 				Sign in to continue managing properties, tenants, and payments.
 			</p>
 		</aside>
 
 		<section
-			class="rounded-[18px] border border-zinc-800 bg-zinc-950/90 p-6 backdrop-blur-md lg:p-8"
+			class="rounded-[18px] border border-zinc-800 bg-zinc-950/90 p-5 backdrop-blur-md sm:p-6 lg:p-8"
 		>
 			<div>
 				<h2 class="m-0 text-xl font-normal text-zinc-50">Sign In</h2>

@@ -1,22 +1,50 @@
 <script lang="ts">
-	import { resolve } from '$app/paths'
-	import type { PageData } from './$types'
+  import StatsGrid from '$lib/components/dashboard/StatsGrid.svelte'
+  import RecentPayments from '$lib/components/dashboard/RecentPayments.svelte'
+  import RecentTickets from '$lib/components/dashboard/RecentTickets.svelte'
+  import RecentActivity from '$lib/components/dashboard/RecentActivity.svelte'
+  import type { PageData } from './$types'
 
-	let { data }: { data: PageData } = $props()
-	const displayName = $derived(data.user?.name ?? 'there')
+  let { data }: { data: PageData } = $props()
 </script>
 
-<main class="p-6 md:p-8">
-	<section class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
-		<div class="mb-4 flex justify-end">
-			<a
-				href={resolve('/logout')}
-				class="inline-flex items-center rounded-lg border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 transition hover:bg-zinc-100"
-			>
-				Logout
-			</a>
-		</div>
-		<h1 class="text-2xl font-semibold text-zinc-900">Welcome, {displayName}</h1>
-		<p class="mt-2 text-zinc-600">You're now in your dashboard.</p>
-	</section>
-</main>
+<section class="space-y-4">
+  <div class="flex justify-end">
+    <p class="text-sm text-zinc-400">{data.todayLabel}</p>
+  </div>
+
+  <StatsGrid
+    expectedRent={data.expectedRent}
+    confirmedRent={data.confirmedRent}
+    outstandingBalance={data.outstandingBalance}
+    occupiedUnits={data.occupiedUnits}
+    vacantUnits={data.vacantUnits}
+    totalUnits={data.totalUnits}
+    overdueTenantsCount={data.overdueTenantsCount}
+    pendingConfirmationsCount={data.pendingConfirmationsCount}
+    openTicketsCount={data.openTicketsCount}
+    monthlyExpectedRent={data.monthlyExpectedRent}
+    monthlyConfirmedRent={data.monthlyConfirmedRent}
+    monthlyOutstanding={data.monthlyOutstanding}
+    monthlyOccupancy={data.monthlyOccupancy}
+    monthlyVacant={data.monthlyVacant}
+    monthlyOverdue={data.monthlyOverdue}
+    monthlyPending={data.monthlyPending}
+    monthlyTickets={data.monthlyTickets}
+    prevExpectedRent={data.prevExpectedRent}
+    prevConfirmedRent={data.prevConfirmedRent}
+    prevOccupiedUnits={data.prevOccupiedUnits}
+    prevOverdueTenants={data.prevOverdueTenants}
+  />
+
+  <div class="grid grid-cols-1 gap-4 lg:grid-cols-5">
+    <div class="lg:col-span-3">
+      <RecentPayments payments={data.recentPayments} />
+    </div>
+    <div class="lg:col-span-2">
+      <RecentTickets tickets={data.recentTickets} />
+    </div>
+  </div>
+
+  <RecentActivity activities={data.recentActivity} />
+</section>

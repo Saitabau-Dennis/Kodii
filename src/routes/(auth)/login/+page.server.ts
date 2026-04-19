@@ -13,7 +13,7 @@ import {
 } from '$lib/server/auth'
 import { sendOTP } from '$lib/server/notifications'
 import { createOTP, invalidateOTPs } from '$lib/services/otp'
-import { getUserByIdentifier } from '$lib/services/users'
+import { getUserByIdentifier, updateLastLoginAt } from '$lib/services/users'
 
 export const load: PageServerLoad = async (event) => {
   const session = await getSession(event)
@@ -54,10 +54,36 @@ export const actions: Actions = {
       return fail(400, { message: 'Incorrect password' })
     }
 
+    if (user.inviteStatus === 'deactivated') {
+      await invalidateOTPs(user.id)
+
+      const reactivationOtp = generateOTP()
+      const reactivationExpiresAt = new Date(Date.now() + 10 * 60 * 1000)
+      await createOTP(user.id, reactivationOtp, reactivationExpiresAt)
+
+      try {
+        await sendOTP(user.phone, reactivationOtp)
+      } catch {
+        return fail(500, { message: 'Unable to send PIN right now. Please try again.' })
+      }
+
+      await setTempCookie(event, {
+        userId: user.id,
+        maskedPhone: maskPhone(user.phone),
+        flow: 'reactivate',
+      })
+
+      throw redirect(
+        302,
+        `/verify?success=${encodeURIComponent('Account reactivation PIN sent. Verify to reactivate your account.')}`,
+      )
+    }
+
     const postRegister = await getPostRegisterCookie(event)
     if (postRegister?.userId === user.id) {
       clearPostRegisterCookie(event)
 
+      await updateLastLoginAt(user.id)
       await createSession(event, {
         userId: user.id,
         role: user.role,

@@ -1,5 +1,6 @@
 import { fail, redirect } from '@sveltejs/kit'
 import type { Actions, PageServerLoad } from './$types'
+import { eq } from 'drizzle-orm'
 import {
   clearTempCookie,
   createSession,
@@ -8,8 +9,11 @@ import {
   setPostRegisterCookie,
 } from '$lib/server/auth'
 import { sendOTP } from '$lib/server/notifications'
+import { users } from '$lib/db/schema'
+import { withRetry } from '$lib/db/retry'
+import { db } from '$lib/server/db'
 import { createOTP, invalidateOTPs, verifyOTP } from '$lib/services/otp'
-import { getUserById, markPhoneVerified } from '$lib/services/users'
+import { getUserById, markPhoneVerified, updateLastLoginAt } from '$lib/services/users'
 
 export const load: PageServerLoad = async (event) => {
   const temp = await getTempCookie(event)
@@ -63,6 +67,17 @@ export const actions: Actions = {
       await markPhoneVerified(user.id)
     }
 
+    if (temp.flow === 'reactivate') {
+      const reactivatedInviteStatus = user.role === 'caretaker' ? 'accepted' : null
+      await withRetry(() =>
+        db
+          .update(users)
+          .set({ inviteStatus: reactivatedInviteStatus })
+          .where(eq(users.id, user.id)),
+      )
+    }
+
+    await updateLastLoginAt(user.id)
     await createSession(event, {
       userId: user.id,
       role: user.role,
@@ -84,6 +99,13 @@ export const actions: Actions = {
       throw redirect(
         302,
         `/dashboard?success=${encodeURIComponent('Phone verified successfully. Welcome back.')}`,
+      )
+    }
+
+    if (temp.flow === 'reactivate') {
+      throw redirect(
+        302,
+        `/dashboard?success=${encodeURIComponent('Account reactivated successfully. Welcome back.')}`,
       )
     }
 

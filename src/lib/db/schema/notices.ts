@@ -14,9 +14,12 @@ export const notices = pgTable('notices', {
   deliveryStatus: varchar('delivery_status', { length: 20 }),
 })
 
-export const noticesRelations = relations(notices, ({ one }) => ({
+export const noticesRelations = relations(notices, ({ one, many }) => ({
   sender: one(users, {
     fields: [notices.sentBy],
     references: [users.id],
   }),
+  replies: many(noticeReplies),
 }))
+
+import { noticeReplies } from './notice-replies'

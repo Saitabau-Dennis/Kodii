@@ -1,4 +1,4 @@
-import { pgTable, uuid, varchar, date, smallint, timestamp } from 'drizzle-orm/pg-core'
+import { pgTable, uuid, varchar, date, smallint, timestamp, numeric } from 'drizzle-orm/pg-core'
 import { relations } from 'drizzle-orm'
 import { properties } from './properties'
 import { units } from './units'
@@ -18,6 +18,8 @@ export const tenants = pgTable('tenants', {
   moveInDate: date('move_in_date').notNull(),
   moveOutDate: date('move_out_date'),
   rentDueDay: smallint('rent_due_day').notNull().default(1),
+  securityDeposit: numeric('security_deposit', { precision: 12, scale: 2 }).notNull().default('0'),
+  creditBalance: numeric('credit_balance', { precision: 12, scale: 2 }).notNull().default('0'),
   status: tenantStatusEnum('status').notNull().default('active'),
   createdAt: timestamp('created_at').notNull().defaultNow(),
 })
