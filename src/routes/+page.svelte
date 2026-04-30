@@ -27,18 +27,6 @@
 		<div class="absolute top-10 right-8 left-8 md:right-12 md:left-12">
 			<Navbar />
 		</div>
-		<div
-			class="pointer-events-none absolute inset-x-0 top-24 h-px bg-gradient-to-r from-zinc-800 via-emerald-500/40 to-zinc-800"
-		></div>
-		<div
-			class="pointer-events-none absolute inset-x-16 top-24 h-px bg-gradient-to-r from-transparent via-emerald-400/45 to-transparent blur-[2px]"
-		></div>
-		<div
-			class="pointer-events-none absolute top-24 left-0 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-zinc-500 bg-zinc-900 shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-		></div>
-		<div
-			class="pointer-events-none absolute top-24 right-0 h-2 w-2 translate-x-1/2 -translate-y-1/2 rounded-full border border-zinc-500 bg-zinc-900 shadow-[0_0_12px_rgba(34,211,238,0.3)]"
-		></div>
 		<div class="flex min-h-screen items-center justify-center px-8 pt-28 pb-28 md:px-12 md:pt-36">
 			<div class="mx-auto max-w-4xl -translate-y-8 text-center md:-translate-y-10">
 				<h1 class="text-4xl leading-[1.05] tracking-tight text-zinc-100 md:text-6xl lg:text-7xl">
@@ -63,17 +51,5 @@
 				</div>
 			</div>
 		</div>
-		<div
-			class="pointer-events-none absolute inset-x-0 bottom-22 h-px bg-gradient-to-r from-zinc-800 via-cyan-500/35 to-zinc-800"
-		></div>
-		<div
-			class="pointer-events-none absolute inset-x-20 bottom-22 h-px bg-gradient-to-r from-transparent via-cyan-400/35 to-transparent blur-[2px]"
-		></div>
-		<div
-			class="pointer-events-none absolute bottom-22 left-0 h-2 w-2 -translate-x-1/2 translate-y-1/2 rounded-full border border-zinc-500 bg-zinc-900 shadow-[0_0_12px_rgba(16,185,129,0.3)]"
-		></div>
-		<div
-			class="pointer-events-none absolute right-0 bottom-22 h-2 w-2 translate-x-1/2 translate-y-1/2 rounded-full border border-zinc-500 bg-zinc-900 shadow-[0_0_12px_rgba(34,211,238,0.25)]"
-		></div>
 	</section>
 </main>
