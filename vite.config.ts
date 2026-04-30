@@ -6,7 +6,7 @@ import { sveltekit } from '@sveltejs/kit/vite';
 export default defineConfig({
 	plugins: [tailwindcss(), sveltekit()],
 	server: {
-		allowedHosts: ['1766-102-208-232-51.ngrok-free.app']
+		allowedHosts: ['c698-2c0f-fe38-2213-ebaa-e6bf-ffc4-cadc-f12c.ngrok-free.app']
 	},
 	test: {
 		expect: { requireAssertions: true },
