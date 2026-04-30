@@ -32,11 +32,11 @@
 				<h1 class="text-4xl leading-[1.05] tracking-tight text-zinc-100 md:text-6xl lg:text-7xl">
 					The Property Tool for
 					<br class="hidden sm:block" />
-					<span class="text-emerald-400">Fast, Reliable</span> Rental Operations
+					<span class="text-emerald-400">Payments, Maintenance</span> and Notices
 				</h1>
 				<p class="mx-auto mt-8 max-w-2xl text-base leading-7 text-zinc-300 md:text-lg">
-					KODII helps landlords, caretakers, and agents handle rent tracking, payment verification,
-					tenant communication, maintenance tickets, and reporting from one modern workspace.
+					KODII helps landlords and caretakers manage rent collection, payment verification, maintenance
+					reporting, and tenant notices from one clear dashboard.
 				</p>
 
 				<div class="mt-10 flex flex-wrap items-center justify-center gap-4">
