@@ -13,9 +13,38 @@ body {
 }
 
 @layer base {
+	html {
+		color-scheme: dark;
+	}
+
 	button:not(:disabled),
 	[role='button']:not([aria-disabled='true']) {
 		cursor: pointer;
+	}
+
+	input:where([type='text']),
+	input:where(:not([type])),
+	input:where([type='email']),
+	input:where([type='url']),
+	input:where([type='password']),
+	input:where([type='number']),
+	input:where([type='date']),
+	input:where([type='datetime-local']),
+	input:where([type='month']),
+	input:where([type='search']),
+	input:where([type='tel']),
+	input:where([type='time']),
+	input:where([type='week']),
+	select,
+	textarea {
+		background-color: rgb(9 9 11 / 0.7);
+		border-color: rgb(63 63 70 / 1);
+		color: rgb(228 228 231 / 1);
+	}
+
+	input::placeholder,
+	textarea::placeholder {
+		color: rgb(113 113 122 / 1);
 	}
 }
 
